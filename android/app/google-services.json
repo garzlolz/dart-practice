@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "397453461993",
+    "project_id": "my-goood-note",
+    "storage_bucket": "my-goood-note.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:397453461993:android:68a791bf1576c5f24ae378",
+        "android_client_info": {
+          "package_name": "com.example.flutter_application_1"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "397453461993-us6tp7fl2vtv7blrebaovdseic0fe96u.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB5vOklWyEPT0Fu-s2rtGf5JaSUag26MQE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "397453461993-us6tp7fl2vtv7blrebaovdseic0fe96u.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "397453461993-kuka4q39807hubdfoml2ahr0dl0nokjm.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.flutterApplication1"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
