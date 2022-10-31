@@ -1,8 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-import 'RegisterView.dart';
-
 class LoginView extends StatefulWidget {
   const LoginView({super.key});
 
@@ -60,7 +58,6 @@ class _LoginViewState extends State<LoginView> {
                 final userCredential = await FirebaseAuth.instance
                     .signInWithEmailAndPassword(
                         email: email, password: password);
-                print(userCredential);
               } on FirebaseAuthException catch (e) {
                 if (e.code.toLowerCase() == "user-not-found") {
                   print('user not found!!');
