@@ -17,7 +17,9 @@ void main() {
     home: const HomePage(),
     routes: {
       '/Login/': (context) => const LoginView(),
-      '/Register/': (context) => const RegisterView()
+      '/Register/': (context) => const RegisterView(),
+      '/HomePage/': (context) => const HomePage(),
+      '/NotesView/': (context) => const NotesView()
     },
   ));
 }
@@ -77,8 +79,12 @@ class _NotesViewState extends State<NotesView> {
                   case MenuAction.logout:
                     final isLogout = await showOutDailog(context);
                     dev.log(isLogout.toString());
-                    Navigator.of(context)
-                        .pushNamedAndRemoveUntil('/Login/', (route) => false);
+                    if (isLogout) {
+                      await FirebaseAuth.instance.signOut();
+                      Firebase.initializeApp();
+                      Navigator.of(context)
+                          .pushNamedAndRemoveUntil('/Login/', (route) => false);
+                    }
                     break;
                 }
               } else {
