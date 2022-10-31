@@ -2,6 +2,7 @@ import 'dart:developer' as dev show log;
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_codebootcamp/Constance/routes.dart';
 import 'package:flutter_application_codebootcamp/View/LoginView.dart';
 import 'package:flutter_application_codebootcamp/View/RegisterView.dart';
 import 'package:flutter_application_codebootcamp/View/VerifyEmailView.dart';
@@ -16,10 +17,9 @@ void main() {
     ),
     home: const HomePage(),
     routes: {
-      '/Login/': (context) => const LoginView(),
-      '/Register/': (context) => const RegisterView(),
-      '/HomePage/': (context) => const HomePage(),
-      '/NotesView/': (context) => const NotesView()
+      loginRoute: (context) => const LoginView(),
+      registerRoute: (context) => const RegisterView(),
+      note: (context) => const NotesView(),
     },
   ));
 }
@@ -81,9 +81,11 @@ class _NotesViewState extends State<NotesView> {
                     dev.log(isLogout.toString());
                     if (isLogout) {
                       await FirebaseAuth.instance.signOut();
-                      Firebase.initializeApp();
-                      Navigator.of(context)
-                          .pushNamedAndRemoveUntil('/Login/', (route) => false);
+                      Firebase.initializeApp(
+                        options: DefaultFirebaseOptions.currentPlatform,
+                      );
+                      Navigator.of(context).pushNamedAndRemoveUntil(
+                          loginRoute, (route) => false);
                     }
                     break;
                 }
@@ -94,9 +96,13 @@ class _NotesViewState extends State<NotesView> {
             itemBuilder: (context) {
               return const [
                 PopupMenuItem<MenuAction>(
-                    value: MenuAction.login, child: Text('Login')),
+                  value: MenuAction.login,
+                  child: Text('Login'),
+                ),
                 PopupMenuItem<MenuAction>(
-                    value: MenuAction.logout, child: Text('Logout'))
+                  value: MenuAction.logout,
+                  child: Text('Logout'),
+                )
               ];
             },
           )

@@ -2,6 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'dart:developer' as dev show log;
 
+import 'package:flutter_application_codebootcamp/Constance/routes.dart';
+
 class RegisterView extends StatefulWidget {
   const RegisterView({super.key});
 
@@ -76,7 +78,7 @@ class _RegisterViewState extends State<RegisterView> {
               onPressed: () async {
                 final routeSuccess =
                     Navigator.of(context).pushNamedAndRemoveUntil(
-                  '/Login/',
+                  loginRoute,
                   (route) => false,
                 );
               },

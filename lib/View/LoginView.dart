@@ -2,6 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'dart:developer' as dev show log;
 
+import 'package:flutter_application_codebootcamp/Constance/routes.dart';
+
 class LoginView extends StatefulWidget {
   const LoginView({super.key});
 
@@ -62,7 +64,7 @@ class _LoginViewState extends State<LoginView> {
                 dev.log(userCredential.toString());
                 if (userCredential.user?.emailVerified ?? false) {
                   Navigator.of(context).pushNamedAndRemoveUntil(
-                    '/NotesView/',
+                    note,
                     (route) => false,
                   );
                 }
@@ -81,7 +83,7 @@ class _LoginViewState extends State<LoginView> {
           TextButton(
             onPressed: () async {
               final routeSuccess = Navigator.of(context)
-                  .pushNamedAndRemoveUntil('/Register/', (route) => false);
+                  .pushNamedAndRemoveUntil(registerRoute, (route) => false);
             },
             child: const Text('Back to Register'),
           ),
