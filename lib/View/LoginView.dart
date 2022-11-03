@@ -1,6 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'dart:developer' as dev show log;
 import 'package:flutter_application_codebootcamp/Constance/routes.dart';
 import 'package:flutter_application_codebootcamp/Utilites/ShowErrorDialog.dart';
 
@@ -61,16 +60,14 @@ class _LoginViewState extends State<LoginView> {
                 final userCredential = await FirebaseAuth.instance
                     .signInWithEmailAndPassword(
                         email: email, password: password);
-                dev.log(userCredential.toString());
                 if (userCredential.user?.emailVerified ?? false) {
                   Navigator.of(context).pushNamedAndRemoveUntil(
-                    note,
+                    noteRoute,
                     (route) => false,
                   );
                 }
               } on FirebaseAuthException catch (e) {
                 await ShowErrorDialog(context, e.message.toString());
-                dev.log(e.code);
               } catch (e) {
                 await ShowErrorDialog(context, e.toString());
               }

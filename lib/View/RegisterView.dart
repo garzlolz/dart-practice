@@ -1,8 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'dart:developer' as dev show log;
-
 import 'package:flutter_application_codebootcamp/Constance/routes.dart';
+import 'package:flutter_application_codebootcamp/Utilites/ShowErrorDialog.dart';
 
 class RegisterView extends StatefulWidget {
   const RegisterView({super.key});
@@ -32,7 +31,7 @@ class _RegisterViewState extends State<RegisterView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: const Text('Register')),
+        appBar: AppBar(title: const Text('註冊')),
         body: Column(
           children: [
             TextField(
@@ -41,7 +40,7 @@ class _RegisterViewState extends State<RegisterView> {
               autocorrect: false,
               keyboardType: TextInputType.emailAddress,
               decoration: const InputDecoration(
-                hintText: 'enter your email',
+                hintText: 'Enter your email',
               ),
             ),
             TextField(
@@ -60,19 +59,17 @@ class _RegisterViewState extends State<RegisterView> {
                   final UserCredential = await FirebaseAuth.instance
                       .createUserWithEmailAndPassword(
                           email: email, password: password);
+                  Navigator.of(context)
+                      .pushNamedAndRemoveUntil(verfyRoute, (route) => false);
                 } on FirebaseAuthException catch (e) {
-                  if (e.code.toLowerCase() == 'weak-password') {
-                    dev.log('weak password!');
-                  } else if (e.code == "email-already-in-use") {
-                    dev.log('email hase benn used');
-                  } else if (e.code == "invalid-email") {
-                    dev.log("invalid-email enterd");
-                  } else {
-                    dev.log(e.code);
+                  if (e.message != null) {
+                    await ShowErrorDialog(context, e.message.toString());
                   }
+                } catch (e) {
+                  await ShowErrorDialog(context, e.toString());
                 }
               },
-              child: const Text('Register'),
+              child: const Text('註冊'),
             ),
             TextButton(
               onPressed: () async {
@@ -82,7 +79,7 @@ class _RegisterViewState extends State<RegisterView> {
                   (route) => false,
                 );
               },
-              child: const Text('Have an account? Login'),
+              child: const Text('已經有帳號了嗎? 登入'),
             ),
           ],
         ));

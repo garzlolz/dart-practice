@@ -1,4 +1,3 @@
-import 'dart:developer' as dev show log;
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +18,8 @@ void main() {
     routes: {
       loginRoute: (context) => const LoginView(),
       registerRoute: (context) => const RegisterView(),
-      note: (context) => const NotesView(),
+      noteRoute: (context) => const NotesView(),
+      verfyRoute: (context) => const VerifyEmailView()
     },
   ));
 }
@@ -78,7 +78,6 @@ class _NotesViewState extends State<NotesView> {
                     break;
                   case MenuAction.logout:
                     final isLogout = await showOutDailog(context);
-                    dev.log(isLogout.toString());
                     if (isLogout) {
                       await FirebaseAuth.instance.signOut();
                       Firebase.initializeApp(
@@ -89,8 +88,6 @@ class _NotesViewState extends State<NotesView> {
                     }
                     break;
                 }
-              } else {
-                dev.log('something');
               }
             },
             itemBuilder: (context) {
@@ -101,14 +98,14 @@ class _NotesViewState extends State<NotesView> {
                 ),
                 PopupMenuItem<MenuAction>(
                   value: MenuAction.logout,
-                  child: Text('Logout'),  
+                  child: Text('Logout'),
                 )
               ];
             },
           )
         ],
       ),
-      body: const Text('Hello World!'),
+      body: const Text('Hello Flutter !'),
     );
   }
 }

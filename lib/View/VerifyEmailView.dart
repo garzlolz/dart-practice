@@ -13,17 +13,17 @@ class _VerifyEmailViewState extends State<VerifyEmailView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('please Verfy Your e-mail'),
+        title: const Text('驗鎮信箱'),
       ),
       body: Column(
         children: [
-          const Text('PLease Verfy your email'),
+          const Text('請驗證您的信箱'),
           TextButton(
               onPressed: () async {
                 final user = FirebaseAuth.instance.currentUser;
                 await user?.sendEmailVerification();
               },
-              child: const Text('Send mail verfy'))
+              child: const Text('發送信件'))
         ],
       ),
     );
