@@ -1,16 +1,19 @@
 import 'package:flutter_application_codebootcamp/services/auth/AuthProvider.dart';
 import 'package:flutter_application_codebootcamp/services/auth/AuthUser.dart';
+import 'package:flutter_application_codebootcamp/services/auth/FirebaseAuthProvider.dart';
 
 class AuthService implements AuthProvider {
   final AuthProvider provider;
   AuthService(this.provider);
 
+  factory AuthService.firebase() => AuthService(FirebaseAuthProvider());
+
   @override
-  Future<AuthUser> Login({
+  Future<AuthUser> login({
     required String email,
     required String password,
   }) =>
-      provider.Login(email: email, password: password);
+      provider.login(email: email, password: password);
 
   @override
   Future<AuthUser> createUser({
@@ -35,4 +38,7 @@ class AuthService implements AuthProvider {
 
   @override
   Future<void> sendEmailVerification() => provider.sendEmailVerification();
+
+  @override
+  Future<void> initalize() async => provider.initalize();
 }

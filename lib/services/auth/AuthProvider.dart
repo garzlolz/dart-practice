@@ -1,8 +1,9 @@
 import 'package:flutter_application_codebootcamp/services/auth/AuthUser.dart';
 
 abstract class AuthProvider {
+  Future<void> initalize();
   AuthUser? get currnetUser;
-  Future<AuthUser> Login({
+  Future<AuthUser> login({
     required String email,
     required String password,
   });

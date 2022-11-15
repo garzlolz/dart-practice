@@ -1,3 +1,5 @@
+import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter_application_codebootcamp/firebase_options.dart';
 import 'package:flutter_application_codebootcamp/services/auth/AuthUser.dart';
 import 'package:flutter_application_codebootcamp/services/auth/authException.dart';
 import 'package:flutter_application_codebootcamp/services/auth/AuthProvider.dart';
@@ -36,7 +38,7 @@ class FirebaseAuthProvider implements AuthProvider {
   }
 
   @override
-  Future<AuthUser> Login({
+  Future<AuthUser> login({
     required String email,
     required String password,
   }) async {
@@ -91,5 +93,14 @@ class FirebaseAuthProvider implements AuthProvider {
     } catch (e) {
       throw GenericAuthException();
     }
+  }
+
+  @override
+  Future<void> initalize() async {
+    // TODO: implement Initalize
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
+    throw UnimplementedError();
   }
 }
