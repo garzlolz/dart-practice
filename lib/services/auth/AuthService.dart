@@ -30,10 +30,8 @@ class AuthService implements AuthProvider {
   AuthUser? get currnetUser => provider.currnetUser;
 
   @override
-  Future<void> logOut() {
+  Future<void> logOut() async {
     provider.logOut();
-    // TODO: implement logOut
-    throw UnimplementedError();
   }
 
   @override

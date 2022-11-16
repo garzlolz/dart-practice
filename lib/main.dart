@@ -5,6 +5,8 @@ import 'package:flutter_application_codebootcamp/Constance/routes.dart';
 import 'package:flutter_application_codebootcamp/View/LoginView.dart';
 import 'package:flutter_application_codebootcamp/View/RegisterView.dart';
 import 'package:flutter_application_codebootcamp/View/VerifyEmailView.dart';
+import 'package:flutter_application_codebootcamp/services/auth/AuthService.dart';
+import 'package:flutter_application_codebootcamp/services/auth/FirebaseAuthProvider.dart';
 import 'View/NotesView.dart';
 import 'firebase_options.dart';
 
@@ -37,9 +39,9 @@ class HomePage extends StatelessWidget {
         builder: (context, snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.done:
-              final user = FirebaseAuth.instance.currentUser;
+              final user = AuthService.firebase().currnetUser;
               if (user != null) {
-                if (user.emailVerified) {
+                if (user.isEmailVerified) {
                   return const NotesView();
                 } else {
                   return const VerifyEmailView();
