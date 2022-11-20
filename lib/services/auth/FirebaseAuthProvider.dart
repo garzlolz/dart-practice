@@ -7,7 +7,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 class FirebaseAuthProvider implements AuthProvider {
   @override
-  // TODO: implement currnetUser
   AuthUser? get currnetUser {
     final user = FirebaseAuth.instance.currentUser;
     if (user != null) {
@@ -75,9 +74,9 @@ class FirebaseAuthProvider implements AuthProvider {
         password: password,
       );
       final user = currnetUser;
-      if (user != null)
+      if (user != null) {
         return user;
-      else {
+      } else {
         throw UserNotLoginAuthException();
       }
     } on FirebaseAuthException catch (e) {
@@ -101,6 +100,5 @@ class FirebaseAuthProvider implements AuthProvider {
     await Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform,
     );
-    throw UnimplementedError();
   }
 }

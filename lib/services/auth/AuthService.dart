@@ -26,7 +26,6 @@ class AuthService implements AuthProvider {
       );
 
   @override
-  // TODO: implement currnetUser
   AuthUser? get currnetUser => provider.currnetUser;
 
   @override

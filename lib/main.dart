@@ -1,14 +1,10 @@
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_codebootcamp/Constance/routes.dart';
 import 'package:flutter_application_codebootcamp/View/LoginView.dart';
+import 'package:flutter_application_codebootcamp/View/NotesView.dart';
 import 'package:flutter_application_codebootcamp/View/RegisterView.dart';
 import 'package:flutter_application_codebootcamp/View/VerifyEmailView.dart';
 import 'package:flutter_application_codebootcamp/services/auth/AuthService.dart';
-import 'package:flutter_application_codebootcamp/services/auth/FirebaseAuthProvider.dart';
-import 'View/NotesView.dart';
-import 'firebase_options.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -33,9 +29,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-        future: Firebase.initializeApp(
-          options: DefaultFirebaseOptions.currentPlatform,
-        ),
+        future: AuthService.firebase().initalize(),
         builder: (context, snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.done:
