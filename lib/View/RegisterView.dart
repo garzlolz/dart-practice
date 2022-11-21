@@ -65,23 +65,22 @@ class _RegisterViewState extends State<RegisterView> {
                   await AuthService.firebase().sendEmailVerification();
                   Navigator.of(context).pushNamed(verfyRoute);
                 } on InvalidEmailAuthException catch (e) {
-                  await ShowErrorDialog(context, 'Invalid Email');
+                  await showErrorDialog(context, 'Invalid Email');
                 } on WeakPassAuthException catch (e) {
-                  await ShowErrorDialog(context, 'Weak Password!');
+                  await showErrorDialog(context, 'Weak Password!');
                 } on EmailAlreadyUsedAuthException catch (e) {
-                  await ShowErrorDialog(context, 'Email Already Been Used!');
+                  await showErrorDialog(context, 'Email Already Been Used!');
                 } on GenericAuthException {
-                  await ShowErrorDialog(context, 'Register fail!');
+                  await showErrorDialog(context, 'Register fail!');
                 } catch (e) {
-                  await ShowErrorDialog(context, e.toString());
+                  await showErrorDialog(context, e.toString());
                 }
               },
               child: const Text('註冊'),
             ),
             TextButton(
               onPressed: () async {
-                final routeSuccess =
-                    Navigator.of(context).pushNamedAndRemoveUntil(
+                await Navigator.of(context).pushNamedAndRemoveUntil(
                   loginRoute,
                   (route) => false,
                 );
