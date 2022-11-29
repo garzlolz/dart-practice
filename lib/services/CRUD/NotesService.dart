@@ -72,7 +72,6 @@ class DatabaseUser {
   bool operator ==(covariant DatabaseUser other) => id == other.id;
 
   @override
-  // TODO: implement hashCode
   int get hashCode => id.hashCode;
 }
 
@@ -104,7 +103,6 @@ class DatabaseNote {
   bool operator ==(covariant DatabaseNote other) => id == other.id;
 
   @override
-  // TODO: implement hashCode
   int get hashCode => id.hashCode;
 }
 
