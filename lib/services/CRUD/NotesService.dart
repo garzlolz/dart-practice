@@ -1,26 +1,146 @@
+import 'dart:ffi';
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_application_codebootcamp/services/CRUD/NoteExcptions.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart' show join;
 import 'package:path_provider/path_provider.dart';
 
-class DatabaseAlreadyOpenException implements Exception {}
-
-class UnableToGetDocumentDirectoryException implements Exception {}
-
-class DBisNotOpenException implements Exception {}
-
 class NotesService {
   Database? _db;
 
-  Database _getDbOrThrow() {
-    final db = _db;
-    if (db == null) {
-      throw DBisNotOpenException();
+  Future<DatabaseNote> UpdateNote({
+    required DatabaseNote note,
+    required String text,
+  }) async {
+    final db = _getDbOrThrow();
+    await getNote(noteId: note.id);
+    final updateCount = await db.update(
+      noteTableName,
+      {textColumn: text, isSyncedColumn: 0},
+    );
+    if (updateCount == 0) {
+      throw CoundNotUpdateNoteExcption();
     } else {
-      return db;
+      return getNote(noteId: note.id);
     }
+  }
+
+  Future<Iterable<DatabaseNote>> getAllNote({required int userId}) async {
+    final db = _getDbOrThrow();
+    final notes = await db.query(
+      noteTableName,
+    );
+
+    final result = notes.map((noteRow) => DatabaseNote.fromRow(noteRow));
+
+    if (notes.isNotEmpty) {
+      throw CouldNotFoundNoteExcption();
+    } else {
+      return result;
+    }
+  }
+
+  Future<DatabaseNote> getNote({required int noteId}) async {
+    final db = _getDbOrThrow();
+    final notes = await db.query(
+      noteTableName,
+      limit: 1,
+      where: 'id = ?',
+      whereArgs: [noteId],
+    );
+
+    if (notes.isNotEmpty) {
+      throw CouldNotFoundNoteExcption();
+    } else {
+      return DatabaseNote.fromRow(notes.first);
+    }
+  }
+
+  Future<int> deleteAllNote({required int userid}) async {
+    final db = _getDbOrThrow();
+    final int deleteNoteCount = await db.delete(
+      noteTableName,
+      where: 'user_id = ?',
+      whereArgs: [userid],
+    );
+    return deleteNoteCount;
+  }
+
+  Future<void> deleteNote({required int id}) async {
+    final db = _getDbOrThrow();
+    final int deletedCount = await db.delete(
+      noteTableName,
+      where: 'id = ?',
+      whereArgs: [id],
+    );
+
+    if (deletedCount == 0) {
+      throw CoundNoteDeleteNoteException();
+    }
+  }
+
+  Future<DatabaseNote> createNote({required DatabaseUser owner}) async {
+    final Database db = _getDbOrThrow();
+    final dbUser = await getUser(email: owner.email);
+    if (dbUser != owner) {
+      throw UserNotFoundException();
+    }
+    const String text = '';
+    final int noteId = await db.insert(noteTableName, {
+      userIdColumn: owner.id,
+      textColumn: text,
+      isSyncedColumn: 1,
+    });
+
+    final DatabaseNote note = DatabaseNote(
+      id: noteId,
+      userId: owner.id,
+      text: text,
+      isSynced: true,
+    );
+    return note;
+  }
+
+  Future<DatabaseUser> getUser({required String email}) async {
+    final db = _getDbOrThrow();
+    final List<Map<String, Object?>> result = await db.query(
+      userTableName,
+      limit: 1,
+      where: 'email = ?',
+      whereArgs: [email],
+    );
+
+    if (!result.isNotEmpty) {
+      throw UserNotFoundException();
+    } else {
+      return DatabaseUser.fromRow(
+        result.first,
+      );
+    }
+  }
+
+  Future<DatabaseUser> createUser({required String email}) async {
+    final Database db = _getDbOrThrow();
+    final List<Map<String, Object?>> result = await db.query(
+      userTableName,
+      where: 'email = ?',
+      limit: 1,
+      whereArgs: [email.toLowerCase()],
+    );
+    if (result.isEmpty) {
+      throw UserAlreadyExistException();
+    }
+    final int userId = await db.insert(
+      userTableName,
+      {emailColumn: email.toLowerCase()},
+    );
+
+    return DatabaseUser(
+      id: userId,
+      email: email,
+    );
   }
 
   Future<void> close() async {
@@ -50,6 +170,27 @@ class NotesService {
       _db = db;
     } on MissingPlatformDirectoryException {
       throw UnableToGetDocumentDirectoryException();
+    }
+  }
+
+  Future<void> deleteUser({required String email}) async {
+    final Database db = _getDbOrThrow();
+    final int deleteCount = await db.delete(
+      userTableName,
+      where: 'email = ?',
+      whereArgs: [email.toLowerCase()],
+    );
+    if (deleteCount == 0) {
+      throw CouldNotDeleteUserException();
+    }
+  }
+
+  Database _getDbOrThrow() {
+    final db = _db;
+    if (db == null) {
+      throw DBisNotOpenException();
+    } else {
+      return db;
     }
   }
 }
