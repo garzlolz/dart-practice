@@ -1,10 +1,6 @@
-import 'dart:math';
-
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter_application_codebootcamp/services/auth/AuthException.dart';
-import 'package:flutter_application_codebootcamp/services/auth/AuthProvider.dart';
-import 'package:flutter_application_codebootcamp/services/auth/AuthUser.dart';
+import 'package:flutter_application_codebootcamp/services/auth/auth_exception.dart';
+import 'package:flutter_application_codebootcamp/services/auth/auth_provider.dart';
+import 'package:flutter_application_codebootcamp/services/auth/auth_user.dart';
 import 'package:test/test.dart';
 
 void main() {
@@ -60,9 +56,9 @@ void main() {
 
     test('Mock User should be get verified', () {
       provider.sendEmailVerification();
-      final _user = provider.currnetUser;
-      expect(_user, isNotNull);
-      expect(_user!.isEmailVerified, true);
+      final user = provider.currnetUser;
+      expect(user, isNotNull);
+      expect(user!.isEmailVerified, true);
     });
 
     test('Should be albe to logg out again and agin', () async {

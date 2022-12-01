@@ -1,4 +1,4 @@
-import 'package:flutter_application_codebootcamp/services/auth/AuthUser.dart';
+import 'package:flutter_application_codebootcamp/services/auth/auth_user.dart';
 
 abstract class AuthProvider {
   Future<void> initalize();

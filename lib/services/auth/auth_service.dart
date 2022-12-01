@@ -1,6 +1,6 @@
-import 'package:flutter_application_codebootcamp/services/auth/AuthProvider.dart';
-import 'package:flutter_application_codebootcamp/services/auth/AuthUser.dart';
-import 'package:flutter_application_codebootcamp/services/auth/FirebaseAuthProvider.dart';
+import 'package:flutter_application_codebootcamp/services/auth/auth_provider.dart';
+import 'package:flutter_application_codebootcamp/services/auth/auth_user.dart';
+import 'package:flutter_application_codebootcamp/services/auth/firebase_auth_provider.dart';
 
 class AuthService implements AuthProvider {
   final AuthProvider provider;

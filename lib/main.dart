@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_codebootcamp/Constance/routes.dart';
-import 'package:flutter_application_codebootcamp/View/LoginView.dart';
-import 'package:flutter_application_codebootcamp/View/NotesView.dart';
-import 'package:flutter_application_codebootcamp/View/RegisterView.dart';
-import 'package:flutter_application_codebootcamp/View/VerifyEmailView.dart';
-import 'package:flutter_application_codebootcamp/services/auth/AuthService.dart';
+import 'package:flutter_application_codebootcamp/View/login_view.dart';
+import 'package:flutter_application_codebootcamp/View/notes_view.dart';
+import 'package:flutter_application_codebootcamp/View/register_view.dart';
+import 'package:flutter_application_codebootcamp/View/verifyemail_view.dart';
+import 'package:flutter_application_codebootcamp/services/auth/auth_service.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();

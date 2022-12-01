@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_codebootcamp/Constance/routes.dart';
-import 'package:flutter_application_codebootcamp/Utilites/ShowErrorDialog.dart';
-import 'package:flutter_application_codebootcamp/services/auth/AuthException.dart';
-import 'package:flutter_application_codebootcamp/services/auth/AuthService.dart';
+import 'package:flutter_application_codebootcamp/Utilites/show_error_dialog.dart';
+import 'package:flutter_application_codebootcamp/services/auth/auth_exception.dart';
+import 'package:flutter_application_codebootcamp/services/auth/auth_service.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({super.key});
@@ -64,12 +64,12 @@ class _LoginViewState extends State<LoginView> {
                 );
                 final user = AuthService.firebase().currnetUser;
                 if (user?.isEmailVerified ?? false) {
-                  Navigator.of(context).pushNamedAndRemoveUntil(
+                  Navigator.of(this.context).pushNamedAndRemoveUntil(
                     noteRoute,
                     (route) => false,
                   );
                 } else {
-                  Navigator.of(context).pushNamedAndRemoveUntil(
+                  Navigator.of(this.context).pushNamedAndRemoveUntil(
                     verfyRoute,
                     (route) => false,
                   );
@@ -97,7 +97,7 @@ class _LoginViewState extends State<LoginView> {
           ),
           TextButton(
             onPressed: () async {
-              final routeSuccess = Navigator.of(context)
+              Navigator.of(context)
                   .pushNamedAndRemoveUntil(registerRoute, (route) => false);
             },
             child: const Text('Back to Register'),

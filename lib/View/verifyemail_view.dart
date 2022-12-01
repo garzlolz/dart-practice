@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_codebootcamp/Constance/routes.dart';
-import 'package:flutter_application_codebootcamp/services/auth/AuthService.dart';
+import 'package:flutter_application_codebootcamp/services/auth/auth_service.dart';
 
 class VerifyEmailView extends StatefulWidget {
   const VerifyEmailView({super.key});
@@ -28,7 +28,7 @@ class _VerifyEmailViewState extends State<VerifyEmailView> {
               onPressed: () async {
                 await AuthService.firebase().logOut();
                 //await FirebaseAuth.instance.signOut();
-                Navigator.of(context)
+                Navigator.of(this.context)
                     .pushNamedAndRemoveUntil(registerRoute, (route) => false);
               },
               child: const Text('回到註冊頁'))

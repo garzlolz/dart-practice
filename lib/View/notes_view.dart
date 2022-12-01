@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_codebootcamp/Constance/routes.dart';
 import 'package:flutter_application_codebootcamp/enums/menu_actions.dart';
-import 'package:flutter_application_codebootcamp/services/auth/AuthService.dart';
+import 'package:flutter_application_codebootcamp/services/CRUD/notes_service.dart';
+import 'package:flutter_application_codebootcamp/services/auth/auth_service.dart';
 
 class NotesView extends StatefulWidget {
   const NotesView({super.key});
@@ -27,7 +28,7 @@ class _NotesViewState extends State<NotesView> {
                     final isLogout = await showOutDailog(context);
                     if (isLogout) {
                       await AuthService.firebase().logOut();
-                      Navigator.of(context).pushNamedAndRemoveUntil(
+                      Navigator.of(this.context).pushNamedAndRemoveUntil(
                           loginRoute, (route) => false);
                     }
                     break;

@@ -1,8 +1,8 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_application_codebootcamp/firebase_options.dart';
-import 'package:flutter_application_codebootcamp/services/auth/AuthUser.dart';
-import 'package:flutter_application_codebootcamp/services/auth/authException.dart';
-import 'package:flutter_application_codebootcamp/services/auth/AuthProvider.dart';
+import 'package:flutter_application_codebootcamp/services/auth/auth_exception.dart';
+import 'package:flutter_application_codebootcamp/services/auth/auth_user.dart';
+import 'package:flutter_application_codebootcamp/services/auth/auth_provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class FirebaseAuthProvider implements AuthProvider {
@@ -96,7 +96,6 @@ class FirebaseAuthProvider implements AuthProvider {
 
   @override
   Future<void> initalize() async {
-    // TODO: implement Initalize
     await Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform,
     );
