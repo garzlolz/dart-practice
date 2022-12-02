@@ -12,6 +12,21 @@ class NotesView extends StatefulWidget {
 }
 
 class _NotesViewState extends State<NotesView> {
+  late final NotesService _noteService;
+  String get userEmail => AuthService.firebase().currnetUser!.email!;
+
+  @override
+  void initState() {
+    _noteService = NotesService();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _noteService.close();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
