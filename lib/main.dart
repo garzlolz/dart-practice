@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_codebootcamp/Constance/routes.dart';
 import 'package:flutter_application_codebootcamp/View/login_view.dart';
-import 'package:flutter_application_codebootcamp/View/notes_view.dart';
+import 'package:flutter_application_codebootcamp/View/notes/notes_view.dart';
+import 'package:flutter_application_codebootcamp/View/notes/new_note_view.dart';
 import 'package:flutter_application_codebootcamp/View/register_view.dart';
 import 'package:flutter_application_codebootcamp/View/verifyemail_view.dart';
 import 'package:flutter_application_codebootcamp/services/auth/auth_service.dart';
@@ -18,7 +19,8 @@ void main() {
       loginRoute: (context) => const LoginView(),
       registerRoute: (context) => const RegisterView(),
       noteRoute: (context) => const NotesView(),
-      verfyRoute: (context) => const VerifyEmailView()
+      verfyRoute: (context) => const VerifyEmailView(),
+      newNoteRoute: ((context) => const NewNoteView())
     },
   ));
 }
