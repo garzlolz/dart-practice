@@ -1,19 +1,12 @@
-import 'package:flutter_application_codebootcamp/services/auth/auth_provider.dart';
-import 'package:flutter_application_codebootcamp/services/auth/auth_user.dart';
-import 'package:flutter_application_codebootcamp/services/auth/firebase_auth_provider.dart';
+import 'package:mynotes/services/auth/auth_provider.dart';
+import 'package:mynotes/services/auth/auth_user.dart';
+import 'package:mynotes/services/auth/firebase_auth_provider.dart';
 
 class AuthService implements AuthProvider {
   final AuthProvider provider;
-  AuthService(this.provider);
+  const AuthService(this.provider);
 
   factory AuthService.firebase() => AuthService(FirebaseAuthProvider());
-
-  @override
-  Future<AuthUser> login({
-    required String email,
-    required String password,
-  }) =>
-      provider.login(email: email, password: password);
 
   @override
   Future<AuthUser> createUser({
@@ -26,16 +19,24 @@ class AuthService implements AuthProvider {
       );
 
   @override
-  AuthUser? get currnetUser => provider.currnetUser;
+  AuthUser? get currentUser => provider.currentUser;
 
   @override
-  Future<void> logOut() async {
-    provider.logOut();
-  }
+  Future<AuthUser> logIn({
+    required String email,
+    required String password,
+  }) =>
+      provider.logIn(
+        email: email,
+        password: password,
+      );
+
+  @override
+  Future<void> logOut() => provider.logOut();
 
   @override
   Future<void> sendEmailVerification() => provider.sendEmailVerification();
 
   @override
-  Future<void> initalize() async => provider.initalize();
+  Future<void> initialize() => provider.initialize();
 }

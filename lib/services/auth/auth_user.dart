@@ -1,5 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart' show User;
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 
 @immutable
 class AuthUser {
@@ -11,7 +11,7 @@ class AuthUser {
   });
 
   factory AuthUser.fromFirebase(User user) => AuthUser(
-        isEmailVerified: user.emailVerified,
         email: user.email,
+        isEmailVerified: user.emailVerified,
       );
 }

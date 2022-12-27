@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
 class NewNoteView extends StatefulWidget {
-  const NewNoteView({super.key});
+  const NewNoteView({Key? key}) : super(key: key);
 
   @override
-  State<NewNoteView> createState() => _NewNoteViewState();
+  _NewNoteViewState createState() => _NewNoteViewState();
 }
 
 class _NewNoteViewState extends State<NewNoteView> {
@@ -14,7 +14,7 @@ class _NewNoteViewState extends State<NewNoteView> {
       appBar: AppBar(
         title: const Text('New Note'),
       ),
-      body: const Text('Write your note here'),
+      body: const Text('Write your new note here...'),
     );
   }
 }

@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_codebootcamp/Constance/routes.dart';
-import 'package:flutter_application_codebootcamp/Utilites/show_error_dialog.dart';
-import 'package:flutter_application_codebootcamp/services/auth/auth_exception.dart';
+import 'package:flutter_application_codebootcamp/constants/routes.dart';
+import 'package:flutter_application_codebootcamp/services/auth/auth_exceptions.dart';
 import 'package:flutter_application_codebootcamp/services/auth/auth_service.dart';
+import 'package:flutter_application_codebootcamp/utilities/show_error_dialog.dart';
 
-class LoginView extends StatefulWidget {
-  const LoginView({super.key});
+class RegisterView extends StatefulWidget {
+  const RegisterView({Key? key}) : super(key: key);
 
   @override
-  State<LoginView> createState() => _LoginViewState();
+  _RegisterViewState createState() => _RegisterViewState();
 }
 
-class _LoginViewState extends State<LoginView> {
+class _RegisterViewState extends State<RegisterView> {
   late final TextEditingController _email;
   late final TextEditingController _password;
 
@@ -33,7 +33,7 @@ class _LoginViewState extends State<LoginView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Login'),
+        title: const Text('Register'),
       ),
       body: Column(
         children: [
@@ -43,7 +43,7 @@ class _LoginViewState extends State<LoginView> {
             autocorrect: false,
             keyboardType: TextInputType.emailAddress,
             decoration: const InputDecoration(
-              hintText: 'enter your email',
+              hintText: 'Enter your email here',
             ),
           ),
           TextField(
@@ -51,57 +51,54 @@ class _LoginViewState extends State<LoginView> {
             obscureText: true,
             enableSuggestions: false,
             autocorrect: false,
-            decoration: const InputDecoration(hintText: 'enter your password'),
+            decoration: const InputDecoration(
+              hintText: 'Enter your password here',
+            ),
           ),
           TextButton(
             onPressed: () async {
               final email = _email.text;
               final password = _password.text;
               try {
-                await AuthService.firebase().login(
+                await AuthService.firebase().createUser(
                   email: email,
                   password: password,
                 );
-                final user = AuthService.firebase().currnetUser;
-                if (user?.isEmailVerified ?? false) {
-                  Navigator.of(this.context).pushNamedAndRemoveUntil(
-                    noteRoute,
-                    (route) => false,
-                  );
-                } else {
-                  Navigator.of(this.context).pushNamedAndRemoveUntil(
-                    verfyRoute,
-                    (route) => false,
-                  );
-                }
-              } on UserNotFoundAuthException {
+                AuthService.firebase().sendEmailVerification();
+                Navigator.of(context).pushNamed(verifyEmailRoute);
+              } on WeakPasswordAuthException {
                 await showErrorDialog(
                   context,
-                  'Wrong Password!',
+                  'Weak password',
                 );
-              } on WrongPasswordAuthException {
+              } on EmailAlreadyInUseAuthException {
                 await showErrorDialog(
                   context,
-                  'User Not Found!',
+                  'Email is already in use',
+                );
+              } on InvalidEmailAuthException {
+                await showErrorDialog(
+                  context,
+                  'This is an invalid email address',
                 );
               } on GenericAuthException {
                 await showErrorDialog(
                   context,
-                  "Authentication Error",
+                  'Failed to register',
                 );
-              } catch (e) {
-                await showErrorDialog(context, e.toString());
               }
             },
-            child: const Text('Login'),
+            child: const Text('Register'),
           ),
           TextButton(
-            onPressed: () async {
-              Navigator.of(context)
-                  .pushNamedAndRemoveUntil(registerRoute, (route) => false);
+            onPressed: () {
+              Navigator.of(context).pushNamedAndRemoveUntil(
+                loginRoute,
+                (route) => false,
+              );
             },
-            child: const Text('Back to Register'),
-          ),
+            child: const Text('Already registered? Login here!'),
+          )
         ],
       ),
     );
