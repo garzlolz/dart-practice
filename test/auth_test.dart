@@ -1,4 +1,4 @@
-import 'package:flutter_application_codebootcamp/services/auth/auth_exception.dart';
+import 'package:flutter_application_codebootcamp/services/auth/auth_exceptions.dart';
 import 'package:flutter_application_codebootcamp/services/auth/auth_provider.dart';
 import 'package:flutter_application_codebootcamp/services/auth/auth_user.dart';
 import 'package:test/test.dart';
@@ -90,10 +90,8 @@ class MockAuthProvider implements AuthProvider {
     );
   }
 
-  @override
   AuthUser? get currnetUser => _user;
 
-  @override
   Future<void> initalize() async {
     await Future.delayed(const Duration(seconds: 1));
     _isInitailize = true;
@@ -111,7 +109,6 @@ class MockAuthProvider implements AuthProvider {
     _user = null;
   }
 
-  @override
   Future<AuthUser> login({
     required String email,
     required String password,
@@ -125,7 +122,7 @@ class MockAuthProvider implements AuthProvider {
     if (password == '8612') {
       throw WrongPasswordAuthException();
     }
-    const user = AuthUser(isEmailVerified: false);
+    const user = AuthUser(isEmailVerified: false, email: '');
     _user = user;
     return Future.value(user);
   }
@@ -139,7 +136,20 @@ class MockAuthProvider implements AuthProvider {
     if (user == null) {
       throw UserNotFoundAuthException();
     }
-    const newUser = AuthUser(isEmailVerified: true);
+    const newUser = AuthUser(isEmailVerified: true, email: '');
     _user = newUser;
+  }
+
+  @override
+  AuthUser? get currentUser => throw UnimplementedError();
+
+  @override
+  Future<void> initialize() {
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<AuthUser> logIn({required String email, required String password}) {
+    throw UnimplementedError();
   }
 }
