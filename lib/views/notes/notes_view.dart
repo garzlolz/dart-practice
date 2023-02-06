@@ -3,7 +3,7 @@ import 'package:flutter_application_codebootcamp/constants/routes.dart';
 import 'package:flutter_application_codebootcamp/enums/menu_action.dart';
 import 'package:flutter_application_codebootcamp/services/auth/auth_service.dart';
 import 'package:flutter_application_codebootcamp/services/crud/notes_service.dart';
-import 'package:flutter_application_codebootcamp/utilities/dialog/logout_dialog.dart';
+import 'package:flutter_application_codebootcamp/utilities/dialogs/logout_dialog.dart';
 import 'package:flutter_application_codebootcamp/views/notes/notes_list_view.dart';
 
 class NotesView extends StatefulWidget {
@@ -73,7 +73,7 @@ class _NotesViewState extends State<NotesView> {
                     case ConnectionState.active:
                       if (snapshot.hasData) {
                         final allNotes = snapshot.data as List<DatabaseNote>;
-                        return NoteListView(
+                        return NotesListView(
                           notes: allNotes,
                           onDeleteNote: (note) async {
                             await _notesService.deleteNote(id: note.id);
